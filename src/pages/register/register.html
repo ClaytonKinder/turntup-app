@@ -14,17 +14,20 @@
 
 
 <ion-content padding class="about">
-  <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+  <form (ngSubmit)="onSubmit(registerForm)" #registerForm="ngForm">
     <input type="text" placeholder="First name" name="firstName" [(ngModel)]="formData.firstName">
     <input type="text" placeholder="Last name" name="lastName" [(ngModel)]="formData.lastName">
     <input type="text" placeholder="Email" name="email" [(ngModel)]="formData.email">
     <button type="submit">Submit</button>
   </form>
+  <button type="button" (click)="getUsers()">Refresh</button>
+  <button type="button" (click)="testFunction()">Test</button>
   <ul>
-    <li *ngFor="let user of users">
+    <li *ngFor="let user of users" style="margin-bottom: 10px;">
       <strong>{{user.firstName}}  {{user.lastName}}</strong>
       <br/>
       <em>{{user.email}}</em>
+      <a (click)="deleteUser(user)">Delete this user</a>
     </li>
   </ul>
   <!-- <form (ngSubmit)="onSubmit(registerForm)" #registerForm="ngForm">

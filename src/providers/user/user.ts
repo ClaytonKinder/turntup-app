@@ -3,7 +3,7 @@ import { Http, Response } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
+// import 'rxjs/add/operator/toPromise';
 
 /*
   Generated class for the UserProvider provider.
@@ -13,17 +13,17 @@ import 'rxjs/add/operator/toPromise';
 */
 @Injectable()
 export class UserProvider {
-  url = 'http://localhost:8080/';
+  url = 'http://localhost:8080/api/';
   constructor(public http: Http) {
     console.log('Hello UserProvider Provider');
   }
 
   createUser(data) {
     console.log(data);
-	  let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    return this.http.post(this.url + 'users', data)
-      .map(this.extractData)
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(this.url + 'users', data, {headers:headers})
+    .map(res => res.json())
   }
 
   getUsers() {
@@ -32,14 +32,12 @@ export class UserProvider {
       .map(res => res.json())
   }
 
-  private extractData(res: Response) {
-	  let body = res.json();
-    return body.data || {};
-  }
-
-  private handleErrorObservable (error: Response | any) {
-	  console.error(error.message || error);
-	  return Observable.throw(error.message || error);
+  deleteUser(user) {
+    console.log('Deleting user: ', user);
+    return this.http.delete(this.url + 'deleteuser', new RequestOptions({
+      body: user
+    }))
+      .map(res => res.json())
   }
 
 }
