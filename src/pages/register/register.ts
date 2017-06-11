@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { UserProvider } from '../../providers/user/user';
-import { App } from 'ionic-angular';
+import { LoginPage } from '../login/login';
 import 'rxjs/add/operator/map'
 
 /**
@@ -28,14 +28,7 @@ export class RegisterPage {
 
   ngOnInit() {
     // initialize user model here
-    this.formData = {
-      firstName: '1',
-      lastName: '2',
-      email: '3',
-      username: '4',
-      password: '5',
-
-    }
+    this.formData = {}
     // this.users = this.userProvider.getUsers();
     this.getUsers();
   }
@@ -56,13 +49,12 @@ export class RegisterPage {
     });
   }
 
-  onSubmit(form){
+  onSubmit(form) {
     this.userProvider.createUser(this.formData).subscribe((res: Response) => {
       console.log(res);
       this.getUsers();
       form.reset();
     }, (err) => {
-      console.log(err.body.message);
       let toast = this.toastCtrl.create({
         message: err.body.message,
         duration: 3000,
@@ -71,6 +63,10 @@ export class RegisterPage {
       });
       toast.present();
     });
+  }
+
+  goToLogin() {
+    this.navCtrl.setRoot(LoginPage);
   }
 
 }

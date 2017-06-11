@@ -6,8 +6,8 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>register</ion-title>
+  <ion-navbar color="primary">
+    <ion-title>Register</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -39,6 +39,7 @@
     </ion-list>
     <button ion-button block type="submit">Submit</button>
   </form>
+  <button ion-button clear block (click)="goToLogin()">Already have an account?</button>
   <ion-card *ngFor="let user of users">
     <ion-card-header>
       <strong>{{user.firstName}}  {{user.lastName}}</strong>
