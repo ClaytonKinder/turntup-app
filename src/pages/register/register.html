@@ -15,25 +15,44 @@
 
 <ion-content padding class="about">
   <form (ngSubmit)="onSubmit(registerForm)" #registerForm="ngForm">
-    <input type="text" placeholder="First name" name="firstName" [(ngModel)]="formData.firstName">
-    <input type="text" placeholder="Last name" name="lastName" [(ngModel)]="formData.lastName">
-    <input type="text" placeholder="Email" name="email" [(ngModel)]="formData.email">
-    <button type="submit">Submit</button>
+    <ion-list>
+      <ion-item>
+        <ion-label floating>First name</ion-label>
+        <ion-input type="text" name="firstName" [(ngModel)]="formData.firstName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Last Name</ion-label>
+        <ion-input type="text" name="lastName" [(ngModel)]="formData.lastName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="email" name="email" [(ngModel)]="formData.email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Username</ion-label>
+        <ion-input type="text" name="username" [(ngModel)]="formData.username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" name="password" [(ngModel)]="formData.password"></ion-input>
+      </ion-item>
+    </ion-list>
+    <button ion-button block type="submit">Submit</button>
   </form>
-  <button type="button" (click)="getUsers()">Refresh</button>
-  <button type="button" (click)="testFunction()">Test</button>
-  <ul>
-    <li *ngFor="let user of users" style="margin-bottom: 10px;">
+  <ion-card *ngFor="let user of users">
+    <ion-card-header>
       <strong>{{user.firstName}}  {{user.lastName}}</strong>
-      <br/>
-      <em>{{user.email}}</em>
-      <a (click)="deleteUser(user)">Delete this user</a>
-    </li>
-  </ul>
-  <!-- <form (ngSubmit)="onSubmit(registerForm)" #registerForm="ngForm">
-    <input type="text" placeholder="First name" name="firstName" ngModel>
-    <input type="text" placeholder="Last name" name="lastName" ngModel>
-    <input type="text" placeholder="Email" name="email" ngModel>
-    <button type="submit">Submit</button>
-  </form> -->
+    </ion-card-header>
+    <ion-card-content>
+      <div>
+        Username: {{user.username}}
+      </div>
+      <div>
+        Email: {{user.email}}
+      </div>
+      <div>
+        <button ion-button block clear color="danger" (click)="deleteUser(user)">Delete</button>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
