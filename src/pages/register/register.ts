@@ -28,7 +28,13 @@ export class RegisterPage {
 
   ngOnInit() {
     // initialize user model here
-    this.formData = {}
+    this.formData = {
+      firstName: 'Dude',
+      lastName: 'Man',
+      email: 'dudeman@bro.com',
+      username: 'dudeman100',
+      password: 'password123'
+    }
     // this.users = this.userProvider.getUsers();
     this.getUsers();
   }
@@ -49,9 +55,8 @@ export class RegisterPage {
     });
   }
 
-  onSubmit(form) {
+  registerUser(form) {
     this.userProvider.createUser(this.formData).subscribe((res: Response) => {
-      console.log(res);
       this.getUsers();
       form.reset();
     }, (err) => {

@@ -14,7 +14,7 @@
 
 
 <ion-content padding class="about">
-  <form (ngSubmit)="onSubmit(registerForm)" #registerForm="ngForm">
+  <form (ngSubmit)="registerUser(registerForm)" #registerForm="ngForm">
     <ion-list>
       <ion-item>
         <ion-label floating>First name</ion-label>
@@ -47,6 +47,9 @@
     <ion-card-content>
       <div>
         Username: {{user.username}}
+      </div>
+      <div>
+        Password: {{user.password}}
       </div>
       <div>
         Email: {{user.email}}

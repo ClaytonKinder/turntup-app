@@ -13,9 +13,15 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class UserProvider {
+  headers;
   url = 'http://localhost:8080/api/';
   constructor(public http: Http) {
     console.log('Hello UserProvider Provider');
+  }
+
+  ngOnInit() {
+    this.headers = new Headers();
+    this.headers.append('Content-Type', 'application/json');
   }
 
   private handleUserError(error:any) {
@@ -42,23 +48,25 @@ export class UserProvider {
   }
 
   createUser(data) {
-    console.log(data);
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(this.url + 'users', data, {headers:headers})
+    return this.http.post(this.url + 'users', data, {headers: this.headers})
     .map(res => res.json())
     .catch((error:any) => this.handleUserError(error));
   }
 
   getUsers() {
-    console.log('Getting users');
     return this.http.get(this.url + 'users')
       .map(res => res.json())
       .catch(this.handleUserError);
   }
 
+  getUser(data) {
+
+    return this.http.post(this.url + 'user', data, {headers: this.headers})
+    .map(res => res.json())
+    .catch((error:any) => this.handleUserError(error));
+  }
+
   deleteUser(user) {
-    console.log('Deleting user: ', user);
     return this.http.delete(this.url + 'deleteuser', new RequestOptions({
       body: user
     })).map(
