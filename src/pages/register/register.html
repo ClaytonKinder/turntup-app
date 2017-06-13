@@ -6,11 +6,11 @@
 -->
 
 
-<ion-content class="about">
+<ion-content>
   <div class="prelogin-header">
     <ion-grid>
       <ion-row align-items-center justify-content-center>
-        <ion-icon name="bulb"></ion-icon>
+        <img src="./assets/svg/turnip-white.svg">
       </ion-row>
       <ion-row>
           <ion-title text-center>Register</ion-title>
@@ -18,7 +18,7 @@
     </ion-grid>
   </div>
   <div padding>
-    <form (ngSubmit)="registerUser(registerForm)" #registerForm="ngForm">
+    <form (ngSubmit)="registerUser(registerForm)" #registerForm="ngForm" *ngIf="!editMode">
       <ion-list>
         <ion-item>
           <ion-label floating>First name</ion-label>
@@ -42,23 +42,52 @@
         </ion-item>
       </ion-list>
       <button ion-button block type="submit">Submit</button>
+      <button ion-button clear block color="secondary" (click)="goToLogin()">Already have an account?</button>
     </form>
-    <button ion-button clear block color="secondary" (click)="goToLogin()">Already have an account?</button>
-    <ion-card *ngFor="let user of users">
-      <ion-card-header>
-        <strong>{{user.firstName}}  {{user.lastName}}</strong>
-      </ion-card-header>
-      <ion-card-content>
-        <div>
-          Username: {{user.username}}
-        </div>
-        <div>
-          Email: {{user.email}}
-        </div>
-        <div>
-          <button ion-button block clear color="danger" (click)="deleteUser(user)">Delete</button>
-        </div>
-      </ion-card-content>
-    </ion-card>
+    <form (ngSubmit)="updateUser(updateForm)" #updateForm="ngForm" *ngIf="editMode">
+      <ion-list>
+        <ion-item>
+          <ion-label floating>First name</ion-label>
+          <ion-input type="text" name="firstName" [(ngModel)]="updateData.firstName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Last Name</ion-label>
+          <ion-input type="text" name="lastName" [(ngModel)]="updateData.lastName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Email</ion-label>
+          <ion-input type="email" name="email" [(ngModel)]="updateData.email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Username</ion-label>
+          <ion-input type="text" name="username" [(ngModel)]="updateData.username"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Password</ion-label>
+          <ion-input type="password" name="password" [(ngModel)]="updateData.password"></ion-input>
+        </ion-item>
+      </ion-list>
+      <button ion-button block type="submit">Update</button>
+      <button ion-button clear block color="danger" (click)="cancelUpdate()">Cancel</button>
+    </form>
+    <div *ngIf="!editMode">
+      <ion-card *ngFor="let user of users" >
+        <ion-card-header>
+          <strong>{{user.firstName}}  {{user.lastName}}</strong>
+        </ion-card-header>
+        <ion-card-content>
+          <div>
+            Username: {{user.username}}
+          </div>
+          <div>
+            Email: {{user.email}}
+          </div>
+          <div text-center>
+            <button ion-button clear color="primary" (click)="editUser(user)">Edit</button>
+            <button ion-button clear color="danger" (click)="deleteUser(user)">Delete</button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
   </div>
 </ion-content>

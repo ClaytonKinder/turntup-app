@@ -19,6 +19,9 @@ export class RegisterPage {
   formData;
   users;
   registerForm;
+  updateData;
+  updateForm;
+  editMode;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -28,7 +31,11 @@ export class RegisterPage {
 
   ngOnInit() {
     this.formData = {}
+    this.updateData = {};
+    this.editMode = false;
     this.getUsers();
+
+    console.log(this.editMode);
   }
 
   ionViewDidLoad() {
@@ -60,6 +67,35 @@ export class RegisterPage {
       });
       toast.present();
     });
+  }
+
+  updateUser(form) {
+    this.userProvider.updateUser(this.updateData).subscribe((res: Response) => {
+      this.getUsers();
+      form.reset();
+      this.editMode = false;
+      this.updateData = {};
+    }, (err) => {
+      console.log(err);
+      // let toast = this.toastCtrl.create({
+      //   message: err.body.message,
+      //   duration: 3000,
+      //   cssClass: 'error text-center',
+      //   position: 'top'
+      // });
+      // toast.present();
+    });
+  }
+
+  cancelUpdate() {
+    this.editMode = false;
+    this.updateData = {};
+  }
+
+  editUser(user) {
+    console.log(user);
+    this.updateData = user;
+    this.editMode = true;
   }
 
   goToLogin() {

@@ -60,8 +60,14 @@ export class UserProvider {
   }
 
   getUser(data) {
-
     return this.http.post(this.url + 'user', data, {headers: this.headers})
+    .map(res => res.json())
+    .catch((error:any) => this.handleUserError(error));
+  }
+
+  updateUser(data) {
+    console.log(data);
+    return this.http.post(this.url + 'updateuser', data, {headers: this.headers})
     .map(res => res.json())
     .catch((error:any) => this.handleUserError(error));
   }
