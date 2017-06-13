@@ -27,15 +27,7 @@ export class RegisterPage {
   ){}
 
   ngOnInit() {
-    // initialize user model here
-    this.formData = {
-      firstName: 'Dude',
-      lastName: 'Man',
-      email: 'dudeman@bro.com',
-      username: 'dudeman100',
-      password: 'password123'
-    }
-    // this.users = this.userProvider.getUsers();
+    this.formData = {}
     this.getUsers();
   }
 
