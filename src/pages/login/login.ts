@@ -35,7 +35,7 @@ export class LoginPage {
     console.log(this.formData);
     this.userProvider.getUser(this.formData).subscribe((res) => {
       let toast = this.toastCtrl.create({
-        message: 'Successfully logged in as ' + res.username,
+        message: 'Successfully logged in as ' + res.email,
         duration: 3000,
         cssClass: 'text-center',
         position: 'top'

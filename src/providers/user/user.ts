@@ -40,14 +40,13 @@ export class UserProvider {
     var dupes = error.body.duplicates;
     if (dupes[0] == 'email') {
       error.body.message = 'Your email address must be unique.';
-    } else if (dupes[0] == 'username') {
-      error.body.message = 'Your username must be unique.';
     }
 
     return error;
   }
 
   createUser(data) {
+    console.log(data);
     return this.http.post(this.url + 'users', data, {headers: this.headers})
     .map(res => res.json())
     .catch((error:any) => this.handleUserError(error));

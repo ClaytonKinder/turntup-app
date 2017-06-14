@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { UserProvider } from '../../providers/user/user';
 import { LoginPage } from '../login/login';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import 'rxjs/add/operator/map'
 
 /**
@@ -16,26 +17,28 @@ import 'rxjs/add/operator/map'
   templateUrl: 'register.html',
 })
 export class RegisterPage {
+  form: FormGroup;
   formData;
   users;
   registerForm;
-  updateData;
-  updateForm;
-  editMode;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private userProvider: UserProvider,
     private toastCtrl: ToastController,
-  ){}
+    @Inject(FormBuilder) fb: FormBuilder
+  ){
+    this.form = fb.group({
+      firstName: ['', Validators.compose([Validators.maxLength(50), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      lastName: ['', Validators.compose([Validators.maxLength(50), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      email: ['', Validators.compose([Validators.maxLength(50), Validators.email, Validators.required])],
+      password: ['', Validators.compose([Validators.maxLength(50), Validators.required])],
+    });
+  }
 
   ngOnInit() {
-    this.formData = {}
-    this.updateData = {};
-    this.editMode = false;
+    this.formData = {};
     this.getUsers();
-
-    console.log(this.editMode);
   }
 
   ionViewDidLoad() {
@@ -67,35 +70,6 @@ export class RegisterPage {
       });
       toast.present();
     });
-  }
-
-  updateUser(form) {
-    this.userProvider.updateUser(this.updateData).subscribe((res: Response) => {
-      this.getUsers();
-      form.reset();
-      this.editMode = false;
-      this.updateData = {};
-    }, (err) => {
-      console.log(err);
-      // let toast = this.toastCtrl.create({
-      //   message: err.body.message,
-      //   duration: 3000,
-      //   cssClass: 'error text-center',
-      //   position: 'top'
-      // });
-      // toast.present();
-    });
-  }
-
-  cancelUpdate() {
-    this.editMode = false;
-    this.updateData = {};
-  }
-
-  editUser(user) {
-    console.log(user);
-    this.updateData = user;
-    this.editMode = true;
   }
 
   goToLogin() {

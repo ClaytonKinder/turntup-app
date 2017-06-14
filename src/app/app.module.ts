@@ -9,13 +9,16 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { UserProvider } from '../providers/user/user';
+import { RegisterFormComponent } from '../components/register-form/register-form';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     RegisterPage,
-    LoginPage
+    LoginPage,
+    RegisterFormComponent,
+    RegisterFormComponent
   ],
   imports: [
     BrowserModule,

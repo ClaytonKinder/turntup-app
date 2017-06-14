@@ -18,72 +18,40 @@
     </ion-grid>
   </div>
   <div padding>
-    <form (ngSubmit)="registerUser(registerForm)" #registerForm="ngForm" *ngIf="!editMode">
+    <form (ngSubmit)="registerUser(registerForm)" #registerForm="ngForm" [formGroup]="form">
       <ion-list>
         <ion-item>
           <ion-label floating>First name</ion-label>
-          <ion-input type="text" name="firstName" [(ngModel)]="formData.firstName"></ion-input>
+          <ion-input type="text" name="firstName" [(ngModel)]="formData.firstName" formControlName="firstName"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label floating>Last Name</ion-label>
-          <ion-input type="text" name="lastName" [(ngModel)]="formData.lastName"></ion-input>
+          <ion-input type="text" name="lastName" [(ngModel)]="formData.lastName" formControlName="lastName"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label floating>Email</ion-label>
-          <ion-input type="email" name="email" [(ngModel)]="formData.email"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Username</ion-label>
-          <ion-input type="text" name="username" [(ngModel)]="formData.username"></ion-input>
+          <ion-input type="email" name="email" [(ngModel)]="formData.email" formControlName="email"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label floating>Password</ion-label>
-          <ion-input type="password" name="password" [(ngModel)]="formData.password"></ion-input>
+          <ion-input type="password" name="password" [(ngModel)]="formData.password" formControlName="password"></ion-input>
         </ion-item>
       </ion-list>
-      <button ion-button block type="submit">Submit</button>
-      <button ion-button clear block color="secondary" (click)="goToLogin()">Already have an account?</button>
+      <button ion-button block type="submit" [attr.disabled]="form.status == 'INVALID' ? true : null">Submit</button>
+      <button ion-button clear block color="secondary" type="button" (click)="goToLogin()">Already have an account?</button>
     </form>
-    <form (ngSubmit)="updateUser(updateForm)" #updateForm="ngForm" *ngIf="editMode">
-      <ion-list>
-        <ion-item>
-          <ion-label floating>First name</ion-label>
-          <ion-input type="text" name="firstName" [(ngModel)]="updateData.firstName"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Last Name</ion-label>
-          <ion-input type="text" name="lastName" [(ngModel)]="updateData.lastName"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Email</ion-label>
-          <ion-input type="email" name="email" [(ngModel)]="updateData.email"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Username</ion-label>
-          <ion-input type="text" name="username" [(ngModel)]="updateData.username"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Password</ion-label>
-          <ion-input type="password" name="password" [(ngModel)]="updateData.password"></ion-input>
-        </ion-item>
-      </ion-list>
-      <button ion-button block type="submit">Update</button>
-      <button ion-button clear block color="danger" (click)="cancelUpdate()">Cancel</button>
-    </form>
-    <div *ngIf="!editMode">
+    <p>Value: {{ form.value | json }}</p>
+    <p>Validation status: {{ form.status }}</p>
+    <div>
       <ion-card *ngFor="let user of users" >
         <ion-card-header>
           <strong>{{user.firstName}}  {{user.lastName}}</strong>
         </ion-card-header>
         <ion-card-content>
           <div>
-            Username: {{user.username}}
-          </div>
-          <div>
             Email: {{user.email}}
           </div>
           <div text-center>
-            <button ion-button clear color="primary" (click)="editUser(user)">Edit</button>
             <button ion-button clear color="danger" (click)="deleteUser(user)">Delete</button>
           </div>
         </ion-card-content>
