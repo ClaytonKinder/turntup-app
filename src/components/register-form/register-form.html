@@ -1,4 +1,22 @@
-<!-- Generated template for the RegisterFormComponent component -->
-<div>
-  {{text}}
-</div>
+<form (ngSubmit)="submitForm(registerForm)" #registerForm="ngForm" [formGroup]="form">
+  <ion-list>
+    <ion-item>
+      <ion-label floating>First name</ion-label>
+      <ion-input type="text" name="firstName" [(ngModel)]="formData.firstName" formControlName="firstName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Last Name</ion-label>
+      <ion-input type="text" name="lastName" [(ngModel)]="formData.lastName" formControlName="lastName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input type="email" name="email" [(ngModel)]="formData.email" formControlName="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input type="password" name="password" [(ngModel)]="formData.password" formControlName="password"></ion-input>
+    </ion-item>
+  </ion-list>
+  <button ion-button block type="submit" [attr.disabled]="form.status == 'INVALID' ? true : null">Submit</button>
+  <button ion-button clear block color="secondary" type="button" (click)="goToLogin()">Already have an account?</button>
+</form>

@@ -2,7 +2,6 @@ import { Component, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { UserProvider } from '../../providers/user/user';
 import { LoginPage } from '../login/login';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import 'rxjs/add/operator/map'
 
 /**
@@ -17,7 +16,6 @@ import 'rxjs/add/operator/map'
   templateUrl: 'register.html',
 })
 export class RegisterPage {
-  form: FormGroup;
   formData;
   users;
   registerForm;
@@ -26,23 +24,13 @@ export class RegisterPage {
     public navParams: NavParams,
     private userProvider: UserProvider,
     private toastCtrl: ToastController,
-    @Inject(FormBuilder) fb: FormBuilder
   ){
-    this.form = fb.group({
-      firstName: ['', Validators.compose([Validators.maxLength(50), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-      lastName: ['', Validators.compose([Validators.maxLength(50), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-      email: ['', Validators.compose([Validators.maxLength(50), Validators.email, Validators.required])],
-      password: ['', Validators.compose([Validators.maxLength(50), Validators.required])],
-    });
+
   }
 
   ngOnInit() {
     this.formData = {};
     this.getUsers();
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RegisterPage');
   }
 
   getUsers() {
@@ -57,10 +45,10 @@ export class RegisterPage {
     });
   }
 
-  registerUser(form) {
-    this.userProvider.createUser(this.formData).subscribe((res: Response) => {
+  registerUser(obj) {
+    this.userProvider.createUser(obj.formData).subscribe((res: Response) => {
       this.getUsers();
-      form.reset();
+      obj.form.reset();
     }, (err) => {
       let toast = this.toastCtrl.create({
         message: err.body.message,
@@ -71,9 +59,4 @@ export class RegisterPage {
       toast.present();
     });
   }
-
-  goToLogin() {
-    this.navCtrl.setRoot(LoginPage);
-  }
-
 }
