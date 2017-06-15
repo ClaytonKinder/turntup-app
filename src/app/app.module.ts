@@ -11,6 +11,7 @@ import { LoginPage } from '../pages/login/login';
 import { UserProvider } from '../providers/user/user';
 import { RegisterFormComponent } from '../components/register-form/register-form';
 import { ToastProvider } from '../providers/toast/toast';
+import { LoginFormComponent } from '../components/login-form/login-form';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ToastProvider } from '../providers/toast/toast';
     RegisterPage,
     LoginPage,
     RegisterFormComponent,
+    LoginFormComponent,
   ],
   imports: [
     BrowserModule,

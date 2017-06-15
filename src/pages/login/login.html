@@ -18,20 +18,5 @@
       </ion-row>
     </ion-grid>
   </div>
-  <div padding>
-    <form (ngSubmit)="getUser(loginForm)" #loginForm="ngForm">
-      <ion-list>
-        <ion-item>
-          <ion-label floating>Email</ion-label>
-          <ion-input type="text" name="email" [(ngModel)]="formData.email"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Password</ion-label>
-          <ion-input type="password" name="password" [(ngModel)]="formData.password"></ion-input>
-        </ion-item>
-      </ion-list>
-      <button ion-button block type="submit">Submit</button>
-    </form>
-    <button ion-button clear block color="medium" (click)="goToRegister()">Don't have an account?</button>
-  </div>
+  <login-form (formSubmitted)="getUser($event)"></login-form>
 </ion-content>

@@ -33,10 +33,10 @@ export class LoginPage {
     this.formData = {};
   }
 
-  getUser(form) {
-    this.userProvider.getUser(this.formData).subscribe((res) => {
+  getUser(obj) {
+    this.userProvider.getUser(obj.formData).subscribe((res) => {
       this.toast.success('Successfully logged in as ' + res.email);
-      form.reset();
+      obj.form.reset();
     }, (err) => {
       this.toast.error(err._body.message);
     });

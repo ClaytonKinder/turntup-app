@@ -22,7 +22,7 @@ export class ToastProvider {
   default(msg) {
     let toast = this.toast.create({
       message: msg,
-      duration: 3000,
+      duration: 50000,
       cssClass: 'text-center',
       position: 'top'
     });
@@ -32,8 +32,8 @@ export class ToastProvider {
   error(msg) {
     let toast = this.toast.create({
       message: msg,
-      duration: 3000,
-      cssClass: 'success text-center',
+      duration: 50000,
+      cssClass: 'error text-center',
       position: 'top'
     });
     toast.present();
@@ -42,7 +42,7 @@ export class ToastProvider {
   success(msg) {
     let toast = this.toast.create({
       message: msg,
-      duration: 3000,
+      duration: 50000,
       cssClass: 'success text-center',
       position: 'top'
     });
