@@ -1,22 +1,42 @@
-<form (ngSubmit)="submitForm(registerForm)" #registerForm="ngForm" [formGroup]="form">
-  <ion-list>
-    <ion-item>
-      <ion-label floating>First name</ion-label>
-      <ion-input type="text" name="firstName" [(ngModel)]="formData.firstName" formControlName="firstName"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Last Name</ion-label>
-      <ion-input type="text" name="lastName" [(ngModel)]="formData.lastName" formControlName="lastName"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Email</ion-label>
-      <ion-input type="email" name="email" [(ngModel)]="formData.email" formControlName="email"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Password</ion-label>
-      <ion-input type="password" name="password" [(ngModel)]="formData.password" formControlName="password"></ion-input>
-    </ion-item>
-  </ion-list>
-  <button ion-button block type="submit" [attr.disabled]="form.status == 'INVALID' ? true : null">Submit</button>
-  <button ion-button clear block color="secondary" type="button" (click)="goToLogin()">Already have an account?</button>
-</form>
+<div padding>
+  <form (ngSubmit)="submitForm(registerForm)" #registerForm="ngForm" [formGroup]="form">
+    <!-- <ion-list>
+      <ion-item>
+        <ion-label floating>First name</ion-label>
+        <ion-input type="text" name="firstName" [(ngModel)]="formData.firstName" formControlName="firstName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Last Name</ion-label>
+        <ion-input type="text" name="lastName" [(ngModel)]="formData.lastName" formControlName="lastName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="email" name="email" [(ngModel)]="formData.email" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" name="password" [(ngModel)]="formData.password" formControlName="password"></ion-input>
+      </ion-item>
+    </ion-list> -->
+    <ion-list>
+      <ion-item>
+        <ion-label floating>First name</ion-label>
+        <ion-input type="text" name="firstName" [(ngModel)]="firstName" formControlName="firstName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Last Name</ion-label>
+        <ion-input type="text" name="lastName" [(ngModel)]="lastName" formControlName="lastName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="email" name="email" [(ngModel)]="email" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" name="password" [(ngModel)]="password" formControlName="password"></ion-input>
+      </ion-item>
+    </ion-list>
+    <button ion-button block type="submit" [attr.disabled]="form.status == 'INVALID' ? true : null">Submit</button>
+    <button ion-button clear block color="medium" type="button" (click)="goToLogin()">Already have an account?</button>
+  </form>
+</div>

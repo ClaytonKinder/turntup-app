@@ -17,7 +17,7 @@
       </ion-row>
     </ion-grid>
   </div>
-  <register-form [formData]="formData" (formSubmitted)="registerUser($event)"></register-form>
+  <register-form (formSubmitted)="registerUser($event)"></register-form>
   <div padding>
     <div>
       <ion-card *ngFor="let user of users" >

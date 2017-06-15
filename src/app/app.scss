@@ -16,33 +16,10 @@
 // automatically applied to the <body> element in the app.
 
 
-.prelogin-header {
-  height: 200px;
-  background-color: color($colors, primary);
+// Global
+@import "./theme/global/toast/toast";
 
-  ion-grid {
-    height: 100%;
+// Prelogin
+@import "./theme/prelogin/header/prelogin-header";
 
-    ion-row {
-      &:first-of-type {
-        height: 75%;
-      }
-
-      &:last-of-type {
-        height: 25%;
-      }
-
-      ion-icon {
-        color: white;
-        font-size: 125px;
-      }
-
-      ion-title {
-        div {
-          color: color($colors, light) !important;
-          text-transform: uppercase;
-        }
-      }
-    }
-  }
-}
+// Postlogin

@@ -10,6 +10,7 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { UserProvider } from '../providers/user/user';
 import { RegisterFormComponent } from '../components/register-form/register-form';
+import { ToastProvider } from '../providers/toast/toast';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,6 @@ import { RegisterFormComponent } from '../components/register-form/register-form
     RegisterPage,
     LoginPage,
     RegisterFormComponent,
-    RegisterFormComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +36,8 @@ import { RegisterFormComponent } from '../components/register-form/register-form
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UserProvider
+    UserProvider,
+    ToastProvider,
   ]
 })
 export class AppModule {}

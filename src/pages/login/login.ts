@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
-import { RegisterPage } from '../register/register';
+import { IonicPage, NavController } from 'ionic-angular';
+// Providers
+import { ToastProvider } from '../../providers/toast/toast';
 import { UserProvider } from '../../providers/user/user';
+// Pages
+import { RegisterPage } from '../../pages/register/register';
 /**
  * Generated class for the LoginPage page.
  *
@@ -16,10 +19,9 @@ import { UserProvider } from '../../providers/user/user';
 export class LoginPage {
   formData;
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
+    private navCtrl: NavController,
     private userProvider: UserProvider,
-    private toastCtrl: ToastController,
+    private toast: ToastProvider,
   ){}
 
   ionViewDidLoad() {
@@ -32,24 +34,11 @@ export class LoginPage {
   }
 
   getUser(form) {
-    console.log(this.formData);
     this.userProvider.getUser(this.formData).subscribe((res) => {
-      let toast = this.toastCtrl.create({
-        message: 'Successfully logged in as ' + res.email,
-        duration: 3000,
-        cssClass: 'text-center',
-        position: 'top'
-      });
-      toast.present();
+      this.toast.success('Successfully logged in as ' + res.email);
       form.reset();
     }, (err) => {
-      let toast = this.toastCtrl.create({
-        message: err.body.message,
-        duration: 3000,
-        cssClass: 'error text-center',
-        position: 'top'
-      });
-      toast.present();
+      this.toast.error(err._body.message);
     });
   }
 

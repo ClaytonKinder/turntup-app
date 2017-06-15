@@ -1,0 +1,30 @@
+.prelogin-header {
+  height: 200px;
+  background-color: color($colors, primary);
+
+  ion-grid {
+    height: 100%;
+
+    ion-row {
+      &:first-of-type {
+        height: 75%;
+      }
+
+      &:last-of-type {
+        height: 25%;
+      }
+
+      ion-icon {
+        color: white;
+        font-size: 125px;
+      }
+
+      ion-title {
+        div {
+          color: color($colors, light) !important;
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+}

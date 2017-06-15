@@ -1,0 +1,17 @@
+ion-toast {
+  &.text-center {
+    .toast-wrapper {
+      text-align: center;
+    }
+  }
+  &.error {
+    .toast-wrapper {
+      background-color: color($colors, danger);
+    }
+  }
+  &.success {
+    .toast-wrapper {
+      background-color: color($colors, success);
+    }
+  }
+}

@@ -14,7 +14,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class UserProvider {
   headers;
-  url = 'http://localhost:8080/api/';
+  url = 'http://localhost:8080/api/users/';
   constructor(public http: Http) {
     console.log('Hello UserProvider Provider');
   }
@@ -24,11 +24,19 @@ export class UserProvider {
     this.headers.append('Content-Type', 'application/json');
   }
 
-  private handleUserError(error:any) {
-    error.body = JSON.parse(error._body);
-    var c = error.body.code;
-    if (c == 11000) {
-      error = this.handleDuplicateError(error);
+  private handleUserError(error:any, msg) {
+    if (error._body) {
+      if (typeof error._body == 'string') {
+        error._body = JSON.parse(error._body);
+      }
+      var c = error._body.code;
+      if (c == 11000) {
+        error = this.handleDuplicateError(error);
+      }
+    }
+
+    if (!error._body.message && msg) {
+      error._body.message = msg;
     }
 
     console.error(error);
@@ -36,39 +44,37 @@ export class UserProvider {
   }
 
   private handleDuplicateError(error:any) {
-    error.body.duplicates = error.body.error.match(/index\:\ [a-z_]+\.[a-z_]+\.\$([a-z_]+)\_[0-9a-z]{1,}\s+dup key[: {]+"(.+)"/).splice(1,3);
-    var dupes = error.body.duplicates;
+    error._body.duplicates = error._body.error.match(/index\:\ [a-z_]+\.[a-z_]+\.\$([a-z_]+)\_[0-9a-z]{1,}\s+dup key[: {]+"(.+)"/).splice(1,3);
+    var dupes = error._body.duplicates;
     if (dupes[0] == 'email') {
-      error.body.message = 'Your email address must be unique.';
+      error._body.message = 'Your email address must be unique.';
     }
 
     return error;
   }
 
   createUser(data) {
-    console.log(data);
-    return this.http.post(this.url + 'users', data, {headers: this.headers})
+    return this.http.post(this.url + 'createuser', data, {headers: this.headers})
     .map(res => res.json())
-    .catch((error:any) => this.handleUserError(error));
+    .catch((error:any) => this.handleUserError(error, 'Could not create user at this time.'));
   }
 
   getUsers() {
-    return this.http.get(this.url + 'users')
+    return this.http.get(this.url + 'getusers')
       .map(res => res.json())
-      .catch(this.handleUserError);
+      .catch((error:any) => this.handleUserError(error, 'Could not get users at this time.'));
   }
 
   getUser(data) {
-    return this.http.post(this.url + 'user', data, {headers: this.headers})
+    return this.http.post(this.url + 'getuser', data, {headers: this.headers})
     .map(res => res.json())
-    .catch((error:any) => this.handleUserError(error));
+    .catch((error:any) => this.handleUserError(error, 'Could not get user at this time.'));
   }
 
   updateUser(data) {
-    console.log(data);
     return this.http.post(this.url + 'updateuser', data, {headers: this.headers})
     .map(res => res.json())
-    .catch((error:any) => this.handleUserError(error));
+    .catch((error:any) => this.handleUserError(error, 'Could not update user at this time.'));
   }
 
   deleteUser(user) {
@@ -76,7 +82,7 @@ export class UserProvider {
       body: user
     })).map(
       res => res.json()
-    ).catch((error:any) => this.handleUserError(error));
+    ).catch((error:any) => this.handleUserError(error, 'Could not delete user at this time.'));
   }
 
 }

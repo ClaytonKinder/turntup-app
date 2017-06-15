@@ -1,7 +1,7 @@
-import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { IonicPage } from 'ionic-angular';
 import { UserProvider } from '../../providers/user/user';
-import { LoginPage } from '../login/login';
+import { ToastProvider } from '../../providers/toast/toast';
 import 'rxjs/add/operator/map'
 
 /**
@@ -16,32 +16,34 @@ import 'rxjs/add/operator/map'
   templateUrl: 'register.html',
 })
 export class RegisterPage {
-  formData;
   users;
   registerForm;
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
     private userProvider: UserProvider,
-    private toastCtrl: ToastController,
-  ){
+    private toast: ToastProvider,
+  ){}
 
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad LoginPage');
   }
 
   ngOnInit() {
-    this.formData = {};
     this.getUsers();
   }
 
   getUsers() {
     this.userProvider.getUsers().subscribe(data => {
       this.users = data;
+    }, (err) => {
+      this.toast.error(err._body.message);
     });
   }
 
   deleteUser(user) {
     this.userProvider.deleteUser(user).subscribe(data => {
       this.getUsers();
+    }, (err) => {
+      this.toast.error(err._body.message);
     });
   }
 
@@ -50,13 +52,7 @@ export class RegisterPage {
       this.getUsers();
       obj.form.reset();
     }, (err) => {
-      let toast = this.toastCtrl.create({
-        message: err.body.message,
-        duration: 3000,
-        cssClass: 'error text-center',
-        position: 'top'
-      });
-      toast.present();
+      this.toast.error(err._body.message);
     });
   }
 }

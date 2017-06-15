@@ -1,8 +1,8 @@
 import { Component, Inject, Input, Output, EventEmitter } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { RegisterPage } from '../../pages/register/register';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+// Pages
 import { LoginPage } from '../../pages/login/login';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 /**
  * Generated class for the RegisterFormComponent component.
  *
@@ -14,8 +14,11 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   templateUrl: 'register-form.html'
 })
 export class RegisterFormComponent {
+  firstName = '';
+  lastName = '';
+  email = '';
+  password = '';
   form: FormGroup;
-  @Input() formData: Object;
   @Output() formSubmitted = new EventEmitter<object>();
 
   constructor(
@@ -23,16 +26,21 @@ export class RegisterFormComponent {
     @Inject(FormBuilder) fb: FormBuilder
   ) {
     this.form = fb.group({
-      firstName: ['', Validators.compose([Validators.maxLength(50), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-      lastName: ['', Validators.compose([Validators.maxLength(50), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-      email: ['', Validators.compose([Validators.maxLength(50), Validators.email, Validators.required])],
-      password: ['', Validators.compose([Validators.maxLength(50), Validators.required])],
+      firstName: [this.firstName, Validators.compose([Validators.maxLength(50), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      lastName: [this.lastName, Validators.compose([Validators.maxLength(50), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      email: [this.email, Validators.compose([Validators.maxLength(50), Validators.email, Validators.required])],
+      password: [this.password, Validators.compose([Validators.maxLength(50), Validators.required])],
     });
   }
 
   submitForm(form) {
     var obj = {
-      formData: this.formData,
+      formData: {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password,
+      },
       form: form
     }
     this.formSubmitted.emit(obj);
